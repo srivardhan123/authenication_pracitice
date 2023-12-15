@@ -63,37 +63,63 @@ router.post("/",async (req,res) => {
     }
 });
 
-// //login
-// router.post("/login", async (req,res) => {
-//     try
-//     {
-//         const {username,password} = req.body;
+//login
+router.post("/login", async (req,res) => {
+    try
+    {
+        const {email,password} = req.body;
+        //validation bad request!
+        if(!email || !password)
+        {
+            return res.status(400).json({errormessage:"email or Password is Empty..."});
+        }
 
-//         //validation bad request!
-//         if(!username || !password)
-//         {
-//             return res.status(400).json({errormessage:"Username or Password is Empty..."});
-//         }
-
-//         //checking whether user exisits with particular username!
-//         const checkusername = await User.find(username);
-//         if(!checkusername)
-//         {
-//             return res.status(400).json({errormessage:"Username or Password is wrong..."});
-//         }
+        //checking whether user exisits with particular email!
+        const checkemail = await User.findOne({email});
+        if(!checkemail)
+        {
+            return res.status(400).json({errormessage:"Email or Password is incorrect..."});
+        }
         
-//         const password_check = await bcrypt.compare(password,checkusername.password);
+        const password_check = await bcrypt.compare(password,checkemail.password);
+        if(!password_check)
+        {
+            return res.status(400).json({errormessage:"email or Password is incorrect..."});
+        }
+        
+        //here we are creating the token with unique id along with JWT Token Password!
+        const token = jwt.sign(
+            {
+                user:checkemail._id,
+            },
+            process.env.JWT_TOKEN
+        );
 
-//         if(!password_check)
-//         {
-//             return res.status(400).json({errormessage:"Username or Password is wrong..."});
-//         }
+        res.cookie("token",token,{
+            httpOnly:true,
+        }).send(checkemail);
 
-//     }catch(err)
-//     {
-//         console.error(err);
-//         res.status(500).send();
-//     }
-// });
+    }catch(err)
+    {
+        console.error(err);
+        res.status(500).send();
+    }
+});
 
+//logout!
+router.get("/logout", async (req,res) => {
+    try
+    {   
+        //here we are clearing the cookie!
+        //making the value of token empty!, also showing the expires time in the past (new Date(0) in the sense it is at 1970!)
+        res.cookie("token","",{
+            httpOnly:true,
+            expires: new Date(0)
+        }).send();
+    }catch(err)
+    {
+        console.error(err);
+        res.status(500).send();
+    }
+});
 module.exports = router;
