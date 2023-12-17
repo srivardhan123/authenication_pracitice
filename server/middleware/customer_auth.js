@@ -18,7 +18,6 @@ function customer_auth(req,res,next)
 
         //donno why i have done this...!
         // req.user = verified.user;
-
         next();
     }catch(err)
     {

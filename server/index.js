@@ -5,11 +5,11 @@
 //for that we use middleware while making post request in customerRoutes..before that particular request executes that
 //middleware executes..(in this project) [this method is authenication middleware!]
 
-
 const express  = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 //configuring .env file
 dotenv.config();
@@ -24,6 +24,15 @@ app.use(express.json());
 
 //for any request, it does cookie parsing with below middleware..so that we can use req.cookie in it!
 app.use(cookieParser());
+
+//if we dont use cors() it wont allow from localhost3000 (fronted) to localhost5001 (backend)...!
+//here, if we don't use "credentials:true", the cookie will just present with in the "network->api_request->headers->here it will show in
+//header's section!"
+//so, we use "credentials:true", in server and frontend(need to accept cookie ) so that it will allow to store in cookie in browser..
+app.use(cors({
+    origin:["http://localhost:3000"],
+    credentials:true,
+}));
 
 //connect to MongoDB!
 mongoose.connect(process.env.MONGODB_URL,{
