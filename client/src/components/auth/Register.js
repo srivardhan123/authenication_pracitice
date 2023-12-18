@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import axios from 'axios';
-import { useNavigate,Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
-
+import AuthContext from '../../context/AuthContext';
 
 export default function Register() {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [confirmpassword,setconfirmPassword] = useState("");
-
+  const {getloggedIn} = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function register(e)
@@ -26,7 +26,8 @@ export default function Register() {
           }
 
           await axios.post("http://localhost:5001/auth/",registerData);
-          navigate("/login");
+          getloggedIn();
+          navigate("/");
      }catch(err)
      {
         console.error(err);

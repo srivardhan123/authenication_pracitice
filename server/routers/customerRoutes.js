@@ -12,15 +12,24 @@ router.post("/",customer_auth,async (req,res) => {
     try
     {
         //if name is empty..., then we are returing with bad request error!
-        const {name} = req.body;
+        const {name,email,age} = req.body;
         if(!name)
         {
             return res.status(400).json({errormessage:"Username is Empty..."});
         }
-
+        if(!email)
+        {
+            return res.status(400).json({errormessage:"Username is Empty..."});
+        }
+        if(!age)
+        {
+            return res.status(400).json({errormessage:"Username is Empty..."});
+        }
         //creating new_customer user and storing it in database...
         const new_customer = await customer.create({
-            name:name
+            name:name,
+            email:email,
+            age:age
         });
         
         res.status(200).send(new_customer);

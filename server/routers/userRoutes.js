@@ -123,4 +123,20 @@ router.get("/logout", async (req,res) => {
     }
 });
 
+//here we this we are already checking whether token is present in cookie or not..so that we can understand whether user is logged in!
+router.get("/loggedIn",(req,res) => {
+    try
+    {
+        const token = req.cookies.token;
+        if(!token)
+        {
+            return res.json(false);
+        }
+        jwt.verify(token,process.env.JWT_TOKEN);
+        return res.json(true);
+    }catch(err)
+    {
+        return res.json(false);
+    }
+});
 module.exports = router;

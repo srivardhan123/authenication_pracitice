@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
-import { useNavigate, Link } from "react-router-dom";
+import {Link,useNavigate } from "react-router-dom";
+import AuthContext from '../../context/AuthContext';
 
 export default function Login() {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
+  const {getloggedIn} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   async function login(e)
   {
@@ -19,23 +22,14 @@ export default function Login() {
             email,
             password
           }
-
           await axios.post("http://localhost:5001/auth/login",loginData);
-     }catch
+          getloggedIn();
+          navigate("/");
+     }catch(err)
      {
-
+        console.error(err);
      }
   }
-//   return (
-//   <div>
-//     <h1>Log in to your Account.</h1>
-//     <form onSubmit={login}>
-//         <input type="email" placeholder="Email" onChange = {(e) => setEmail(e.target.value)} value = {email}/>
-//         <input type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)} value = {password}/>
-//         <button type="submit"> Login </button>
-//     </form>
-//   </div>
-//   );
 
     return (
         <>
