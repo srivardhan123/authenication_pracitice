@@ -15,24 +15,23 @@ export default function Router() {
   //now, to get the those context value in the compoents...
   //we use UseContext!
   const {loggedIn} = useContext(AuthContext)
-  console.log(loggedIn);
+  // console.log(loggedIn);
 
   return (
     <Container>
     <BrowserRouter>
-        <Navbar/>
         <Routes>
           {/* using the loggedIn context value, before login not allowing to route into customer page... */}
             {
               loggedIn===false && (<> 
                     <Route path='/register' element={<Register/>} />
-                    <Route path='/login' element={<Login/>}>
+                    <Route path='/' element={<Login/>}>
                     </Route>
               </>)
             }
             {
               loggedIn===true && (<>
-              <Route path='/' element={<Customers/>}></Route>
+              <Route path='/home' element={<Customers/>}></Route>
               <Route path='/customer' element={<CustomerForm/>}>
               </Route>
               <Route path='/logout' element={<Logout/>}>
@@ -44,6 +43,21 @@ export default function Router() {
     </BrowserRouter>
     </Container>
   );
+
+  // return (
+  //  < BrowserRouter>
+  //  <Routes>
+  //                    <Route path='/register' element={<Register/>} />
+  //                  <Route path='/login' element={<Login/>}>
+  //                  </Route>
+  //                 <Route path='/' element={<Customers/>}></Route>
+  //          <Route path='/customer' element={<CustomerForm/>}>
+  //      </Route>
+  //         <Route path='/logout' element={<Logout/>}>
+  //           </Route> 
+  //  </Routes>
+  //  </BrowserRouter>
+  // );
 }
 
 const Container = styled.div`

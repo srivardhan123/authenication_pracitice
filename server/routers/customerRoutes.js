@@ -1,14 +1,13 @@
 const router = require("express").Router();
 const customer = require("../models/customerModel");
 
-const customer_auth = require("../middleware/customer_auth");
 //Here, before the postrequest..we would like to execute middleware before the request..
 //because we create customer only, if the user is logggedin..so before executing this "aync(req,res)" we add a middleware "auth"
 //this middleware validates the cookie and checks whether a user is loggedin or not!
 
 
 //this request for creating customer...
-router.post("/",customer_auth,async (req,res) => {
+router.post("/",async (req,res) => {
     try
     {
         //if name is empty..., then we are returing with bad request error!
@@ -41,7 +40,7 @@ router.post("/",customer_auth,async (req,res) => {
 });
 
 //to get all the customers...irrespective of the user!
-router.get("/",customer_auth,async (req,res) => {
+router.get("/",async (req,res) => {
     try
     {
         const customers = await customer.find();

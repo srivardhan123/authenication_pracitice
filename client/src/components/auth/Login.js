@@ -1,15 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import axios from 'axios';
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import {Link,useNavigate } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 
+
 export default function Login() {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const {getloggedIn} = useContext(AuthContext);
+  const {loggedIn,getloggedIn} = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function login(e)
@@ -23,13 +24,22 @@ export default function Login() {
             password
           }
           await axios.post("http://localhost:5001/auth/login",loginData);
-          getloggedIn();
-          navigate("/");
+          await getloggedIn();
+          console.log("hello");
+          navigate("/home");
      }catch(err)
      {
         console.error(err);
      }
   }
+  useEffect(() => {
+      getloggedIn();
+      // console.log(loggedIn);
+      if(loggedIn===true)
+      {
+          navigate("/home");
+      }
+  },[]);
 
     return (
         <>

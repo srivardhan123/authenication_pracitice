@@ -10,7 +10,7 @@ function AuthContextProvider(props) {
   
   //this is function need to run when the components loads for the first time..
   //that we are checking whether user is logged in already or not..
-  //this is called context..we pass this info to Routers and display the functions in the frontend accordingly!
+  //this is called context..we pass this info to Routers ancled display the functions in the frontend accordingly!
 
   async function getloggedIn()
   {

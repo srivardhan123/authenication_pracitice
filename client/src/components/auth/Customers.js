@@ -1,26 +1,40 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useContext} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import Logo from "../assets/logo.svg";
+import {useNavigate} from "react-router-dom";
+import Navbar from '../layouts/Navbar';
+import AuthContext from '../../context/AuthContext';
 
 export default function Customers() {
     const [data,setdata] = useState([]);
+    const {loggedIn,getloggedIn} = useContext(AuthContext);
+    const navigate = useNavigate();
+
     async function fetchInfo()
     {
         try{
              const tempData = await axios.get("http://localhost:5001/customer/");
              setdata(tempData.data);
-             console.log(data);
         }catch(err)
         {
            console.error(err);
         }
     }
+
     useEffect(() => {
+        getloggedIn();
+        console.log(loggedIn);
+        if(loggedIn===false)
+        {
+            navigate("/login");
+        }
         fetchInfo();
     },[]);
     
     return (
+      <>
+      <Navbar/>
       <TableContainer>
          <div className="brand">
              <img src={Logo} alt="logo" />
@@ -51,6 +65,7 @@ export default function Customers() {
             </table>
         </div>
       </TableContainer>
+      </>
     )
 }
 

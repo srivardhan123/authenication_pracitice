@@ -9,7 +9,7 @@ export default function Navbar(){
   //we use UseContext!
 
   const {loggedIn} = useContext(AuthContext)
-  console.log(loggedIn);
+  // console.log(loggedIn);
     return (
         <>
            <Nav>
@@ -24,7 +24,7 @@ export default function Navbar(){
                 </NavLink>
 
                 <NavLink 
-                  to="/login" 
+                  to="/" 
                   activestyle={{ color: 'black' }}
                 >
                     Login
@@ -36,7 +36,7 @@ export default function Navbar(){
                 {loggedIn===true && 
                   <>
                 <NavLink 
-                  to="/"
+                  to="/home"
                   activestyle={{ color:'black' }}
                 >
                     Home

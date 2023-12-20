@@ -1,16 +1,17 @@
-import React, { useState,useContext } from 'react'
+import React, { useState,useContext,useEffect} from 'react'
 import axios from 'axios';
 import {Link,useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import AuthContext from '../../context/AuthContext';
 
+
 export default function Register() {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [confirmpassword,setconfirmPassword] = useState("");
-  const {getloggedIn} = useContext(AuthContext);
+  const {loggedIn,getloggedIn} = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function register(e)
@@ -24,26 +25,24 @@ export default function Register() {
             password,
             confirmpassword
           }
-
           await axios.post("http://localhost:5001/auth/",registerData);
-          getloggedIn();
-          navigate("/");
+          await getloggedIn();
+          console.log(loggedIn);
+          navigate("/home");
      }catch(err)
      {
         console.error(err);
      }
   }
-  // return (
-  // <div>
-  //   <h1>Register a new account! </h1>
-  //   <form onSubmit={register}>
-  //       <input type="email" placeholder="Email" onChange = {(e) => setEmail(e.target.value)} value = {email}/>
-  //       <input type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)} value = {password}/>
-  //       <input type="password" placeholder="confirmPassword" onChange = {(e) => setconfirmPassword(e.target.value)} value={confirmpassword}/>
-  //       <button type="submit"> Register </button>
-  //   </form>
-  // </div>
-  // );
+
+  useEffect(() => {
+    // console.log(loggedIn);
+      getloggedIn();
+      if(loggedIn===true)
+      {
+          navigate("/home");
+      }
+  },[]);
 
   return (
     <>
@@ -74,7 +73,7 @@ export default function Register() {
                 <button type="submit"> Register </button>
 
                 <span>
-                    Already have an account ? <Link to="/login">Login.</Link>
+                    Already have an account ? <Link to="/">Login.</Link>
                 </span>
             </form>
             

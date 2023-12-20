@@ -14,7 +14,7 @@ export default function Logout() {
   {
     await axios.get('http://localhost:5001/auth/logout');
     await getloggedIn();
-    navigate("/login");
+    navigate("/");
   }
   return (
     <>

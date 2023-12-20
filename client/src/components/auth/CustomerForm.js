@@ -1,16 +1,28 @@
-import React, { useState} from 'react'
+import React, { useState,useContext,useEffect} from 'react'
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
+import AuthContext from '../../context/AuthContext';
+import Navbar from '../layouts/Navbar';
 
 export default function CustomerForm() 
 {
   const [email,setEmail] = useState("");
   const [name,setName] = useState("");
   const [age,setAge] = useState("");
-  
+  const {loggedIn,getloggedIn} = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // console.log(loggedIn);
+    getloggedIn();
+    if(loggedIn===false)
+    {
+      navigate('/login');
+    }
+  },[]);
 
   async function customerform(e)
   {
@@ -22,7 +34,7 @@ export default function CustomerForm()
             age
           }
           await axios.post("http://localhost:5001/customer/",customerData);
-          navigate("/");
+          navigate("/home");
      }catch(err)
      {
         console.error(err);
@@ -31,6 +43,7 @@ export default function CustomerForm()
   
   return (
     <>  
+        <Navbar/>
         <FormContainer>
             <form onSubmit = {customerform} >
                 <div className="brand">
