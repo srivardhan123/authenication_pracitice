@@ -18,11 +18,11 @@ router.post("/",async (req,res) => {
         }
         if(!email)
         {
-            return res.status(400).json({errormessage:"Username is Empty..."});
+            return res.status(400).json({errormessage:"Email is Empty..."});
         }
         if(!age)
         {
-            return res.status(400).json({errormessage:"Username is Empty..."});
+            return res.status(400).json({errormessage:"Age is Empty..."});
         }
         //creating new_customer user and storing it in database...
         const new_customer = await customer.create({
@@ -50,6 +50,23 @@ router.get("/",async (req,res) => {
         console.error(err);
         res.status(500).send();
     }
+});
+
+
+//delete the row...API!
+router.post("/delete", async (req,res) => {
+
+    try
+    {
+        const {_id} = req.body;
+        const Customer_data = await customer.findByIdAndDelete({_id});
+        return res.status(200).json(Customer_data);
+    }catch(err)
+    {
+        console.error(err);
+        return res.status(500).json({errormessage:"getting error, while deleting the row..."});
+    }
+
 });
 
 module.exports = router;

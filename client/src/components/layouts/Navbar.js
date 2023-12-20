@@ -39,10 +39,10 @@ export default function Navbar(){
                   to="/home"
                   activestyle={{ color:'black' }}
                 >
-                    Home
+                    Customers
                 {/* now here if it is not loggedIn only..then we render register and login page! */}
                 </NavLink>
-                    <NavLink to='/customer'>Customer</NavLink>
+                    <NavLink to='/customer'>Add New Customer</NavLink>
                     <Logout/>
                   </>
                 }

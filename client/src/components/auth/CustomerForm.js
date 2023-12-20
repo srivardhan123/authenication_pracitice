@@ -48,7 +48,7 @@ export default function CustomerForm()
             <form onSubmit = {customerform} >
                 <div className="brand">
                     <img src={Logo} alt="logo" />
-                    <h1>Enter Customer Details</h1>
+                    <h1>Enter new Customer Details</h1>
                 </div>
                 <input 
                     type="text"

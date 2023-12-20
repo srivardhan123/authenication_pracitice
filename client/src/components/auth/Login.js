@@ -25,7 +25,6 @@ export default function Login() {
           }
           await axios.post("http://localhost:5001/auth/login",loginData);
           await getloggedIn();
-          console.log("hello");
           navigate("/home");
      }catch(err)
      {
@@ -33,8 +32,7 @@ export default function Login() {
      }
   }
   useEffect(() => {
-      getloggedIn();
-      // console.log(loggedIn);
+       getloggedIn();
       if(loggedIn===true)
       {
           navigate("/home");
@@ -47,7 +45,7 @@ export default function Login() {
                 <form onSubmit = {login} >
                     <div className="brand">
                         <img src={Logo} alt="logo" />
-                        <h1>Login</h1>
+                        <h1>Customer Hub</h1>
                     </div>
                     <input
                         type = "email"

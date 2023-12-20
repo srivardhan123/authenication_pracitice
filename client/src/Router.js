@@ -1,7 +1,6 @@
 import React,{useContext} from 'react'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/layouts/Navbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import styled from "styled-components";
@@ -16,6 +15,33 @@ export default function Router() {
   //we use UseContext!
   const {loggedIn} = useContext(AuthContext)
   // console.log(loggedIn);
+
+  // return (
+  //   <Container>
+  //   <BrowserRouter>
+  //       <Routes>
+  //         {/* using the loggedIn context value, before login not allowing to route into customer page... */}
+  //           {
+  //             loggedIn===false && (<> 
+  //                   <Route path='/register' element={<Register/>} />
+  //                   <Route path='/' element={<Login/>}>
+  //                   </Route>
+  //             </>)
+  //           }
+  //           {
+  //             loggedIn===true && (<>
+  //             <Route path='/home' element={<Customers/>}></Route>
+  //             <Route path='/customer' element={<CustomerForm/>}>
+  //             </Route>
+  //             <Route path='/logout' element={<Logout/>}>
+  //             </Route> 
+  //             </>)
+  //           }
+  //       </Routes>
+
+  //   </BrowserRouter>
+  //   </Container>
+  // );
 
   return (
     <Container>
@@ -43,21 +69,6 @@ export default function Router() {
     </BrowserRouter>
     </Container>
   );
-
-  // return (
-  //  < BrowserRouter>
-  //  <Routes>
-  //                    <Route path='/register' element={<Register/>} />
-  //                  <Route path='/login' element={<Login/>}>
-  //                  </Route>
-  //                 <Route path='/' element={<Customers/>}></Route>
-  //          <Route path='/customer' element={<CustomerForm/>}>
-  //      </Route>
-  //         <Route path='/logout' element={<Logout/>}>
-  //           </Route> 
-  //  </Routes>
-  //  </BrowserRouter>
-  // );
 }
 
 const Container = styled.div`

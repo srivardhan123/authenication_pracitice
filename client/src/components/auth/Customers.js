@@ -21,24 +21,38 @@ export default function Customers() {
            console.error(err);
         }
     }
-
+    // const handledelete = (key,e) => 
+    // {
+    //     setdata(data.filter((val,i) => i !== key));
+    // }
+    const handledelete = async (val,key,e) => 
+    {
+        try
+        {
+          setdata(data.filter((val1,i) => i !== key));
+          await axios.post("http://localhost:5001/customer/delete",val);
+        }catch(err)
+        {
+          console.error('Error deleting items: ',err);
+          
+        }
+    }
     useEffect(() => {
         getloggedIn();
         console.log(loggedIn);
         if(loggedIn===false)
         {
-            navigate("/login");
+            navigate("/");
         }
         fetchInfo();
     },[]);
-    
     return (
       <>
       <Navbar/>
       <TableContainer>
          <div className="brand">
              <img src={Logo} alt="logo" />
-             <h1>Customer Details</h1>
+             <h1>Customers</h1>
         </div>
         <div>
             <table>
@@ -57,8 +71,9 @@ export default function Customers() {
                             <td>{val.name}</td>
                             <td>{val.email}</td>
                             <td>{val.age}</td>
-                            <td>edit</td>
-                            <td>delete</td>
+                            <td><button className="edit-button" >edit</button></td>
+                            {/* <td><button className="delete-button" onClick={e => handledelete(key,e)} >delete</button></td> */}
+                            <td><button className="delete-button" onClick={e => handledelete(val,key,e)} >delete</button></td> 
                         </tr>
                     )
                 })}
@@ -109,5 +124,15 @@ td {
   text-align: center;
   border: 2px solid blue;
   color:blue;
+}
+.edit-button
+{
+  color:white;
+  background-color:green;
+}
+.delete-button
+{
+  background-color:red;
+  color:white;
 }
 `

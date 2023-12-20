@@ -50,7 +50,7 @@ export default function Register() {
             <form onSubmit = {register} >
                 <div className="brand">
                     <img src={Logo} alt="logo" />
-                    <h1>User Authenication</h1>
+                    <h1>Customer Hub</h1>
                 </div>
                 <input
                     type = "email"
