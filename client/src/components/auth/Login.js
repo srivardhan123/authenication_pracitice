@@ -37,7 +37,7 @@ export default function Login() {
       {
           navigate("/home");
       }
-  },[]);
+  },[loggedIn]);
 
     return (
         <>

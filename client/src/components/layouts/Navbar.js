@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Logout from "../auth/Logout";
 
 export default function Navbar(){
+
   //now, to get the those context value in the compoents...
   //we use UseContext!
-
-  const {loggedIn} = useContext(AuthContext)
-  // console.log(loggedIn);
+  const {loggedIn,getloggedIn} = useContext(AuthContext)
+  useEffect(() => {
+    getloggedIn();
+},[]);
     return (
         <>
            <Nav>

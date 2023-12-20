@@ -16,13 +16,12 @@ export default function CustomerForm()
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(loggedIn);
     getloggedIn();
     if(loggedIn===false)
     {
-      navigate('/login');
+      navigate('/');
     }
-  },[]);
+  },[loggedIn]);
 
   async function customerform(e)
   {

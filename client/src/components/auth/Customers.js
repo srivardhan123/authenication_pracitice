@@ -21,10 +21,6 @@ export default function Customers() {
            console.error(err);
         }
     }
-    // const handledelete = (key,e) => 
-    // {
-    //     setdata(data.filter((val,i) => i !== key));
-    // }
     const handledelete = async (val,key,e) => 
     {
         try
@@ -39,13 +35,13 @@ export default function Customers() {
     }
     useEffect(() => {
         getloggedIn();
-        console.log(loggedIn);
         if(loggedIn===false)
         {
             navigate("/");
         }
         fetchInfo();
-    },[]);
+    },[loggedIn]);
+
     return (
       <>
       <Navbar/>

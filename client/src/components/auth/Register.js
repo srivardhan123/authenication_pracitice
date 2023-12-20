@@ -36,13 +36,12 @@ export default function Register() {
   }
 
   useEffect(() => {
-    // console.log(loggedIn);
       getloggedIn();
       if(loggedIn===true)
       {
           navigate("/home");
       }
-  },[]);
+  },[loggedIn]);
 
   return (
     <>

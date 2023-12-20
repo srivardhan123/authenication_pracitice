@@ -5,7 +5,6 @@ const customer = require("../models/customerModel");
 //because we create customer only, if the user is logggedin..so before executing this "aync(req,res)" we add a middleware "auth"
 //this middleware validates the cookie and checks whether a user is loggedin or not!
 
-
 //this request for creating customer...
 router.post("/",async (req,res) => {
     try
