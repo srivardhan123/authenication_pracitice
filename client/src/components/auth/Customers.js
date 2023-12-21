@@ -63,7 +63,7 @@ export default function Customers() {
       <TableContainer>
          <div className="brand">
              <img src={Logo} alt="logo" />
-             <h1>Customers</h1>
+             <h1>Total Customers</h1>
         </div>
         <div>
             <table>

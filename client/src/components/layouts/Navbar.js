@@ -3,48 +3,34 @@ import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Logout from "../auth/Logout";
-
+import {useNavigate} from "react-router-dom";
 export default function Navbar(){
 
   //now, to get the those context value in the compoents...
   //we use UseContext!
   const {loggedIn,getloggedIn} = useContext(AuthContext)
+  const navigate = useNavigate();
+
+  const newuser = () => {
+      navigate("/customer");
+  };  
   useEffect(() => {
     getloggedIn();
 },[]);
+
     return (
         <>
            <Nav>
-
-                {loggedIn===false && (
-                  <>
-                <NavLink 
-                  to="/register"
-                  activestyle={{ color: 'black' }}
-                >
-                    Register
-                </NavLink>
-
-                <NavLink 
-                  to="/" 
-                  activestyle={{ color: 'black' }}
-                >
-                    Login
-                </NavLink>
-
-                  </>
-                )}
-
                 {loggedIn===true && 
                   <>
                 <NavLink 
                   to="/home"
-                  activestyle={{ color:'black' }}
                 >
                     Customers
-                {/* now here if it is not loggedIn only..then we render register and login page! */}
                 </NavLink>
-                    <NavLink to='/customer'>Add New Customer</NavLink>
+                    <NavBtn> 
+                     <NavBtnLink onClick={newuser}>Add New Customer</NavBtnLink> 
+                 </NavBtn> 
                     <Logout/>
                   </>
                 }
@@ -79,3 +65,30 @@ cursor: pointer;
 }
 `;
 
+const NavBtn = styled.nav`
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const NavBtnLink = styled.nav`
+  border-radius: 4px;
+  background: transparent;
+  padding: 10px 22px;
+  color: #fff;
+  outline: none;
+  border: 1px solid #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  margin-left: 24px;
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #808080;
+  }
+`;

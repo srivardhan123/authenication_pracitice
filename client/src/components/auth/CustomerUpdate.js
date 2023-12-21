@@ -17,7 +17,6 @@ export default function CustomerUpdate(props) {
     {
        e.preventDefault();
        try{
-        console.log(props.data1)
             const UpdatedData = {
               _id,
               name,
