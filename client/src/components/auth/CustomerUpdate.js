@@ -1,54 +1,45 @@
-import React, { useState,useContext,useEffect} from 'react';
+import React from 'react';
+import { useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import Navbar from '../layouts/Navbar';
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
-import AuthContext from '../../context/AuthContext';
-import Navbar from '../layouts/Navbar';
 
-export default function CustomerForm() 
-{
+export default function CustomerUpdate(props) {
 
-  const [email,setEmail] = useState("");
-  const [name,setName] = useState("");
-  const [age,setAge] = useState("");
-  const {loggedIn,getloggedIn} = useContext(AuthContext);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    getloggedIn();
-    if(loggedIn===false)
+    const [email,setEmail] = useState(props.data1.email);
+    const [name,setName] = useState(props.data1.name);
+    const [age,setAge] = useState(props.data1.age);
+    const _id = props.data1._id;
+    const navigate = useNavigate();
+    async function customerform(e)
     {
-      navigate('/');
+       e.preventDefault();
+       try{
+        console.log(props.data1)
+            const UpdatedData = {
+              _id,
+              name,
+              email,
+              age
+            }
+            await axios.post("http://localhost:5001/customer/update",UpdatedData);
+            props.SetEdit(true);
+            props.setTempData([]);
+            navigate("/home");
+       }catch(err)
+       {
+          console.error(err);
+       }
     }
-  },[loggedIn]);
-
-  async function customerform(e)
-  {
-     e.preventDefault();
-     try{
-          const customerData  = {
-            email,
-            name,
-            age
-          }
-          await axios.post("http://localhost:5001/customer/",customerData);
-          navigate("/home");
-     }catch(err)
-     {
-        console.error(err);
-     }
-  }
-  
   return (
     <>  
-        <Navbar/>
         <FormContainer>
             <form onSubmit = {customerform} >
                 <div className="brand">
                     <img src={Logo} alt="logo" />
-                    <h1>Enter new Customer Details</h1>
+                    <h1>Update Customer Details</h1>
                 </div>
                 <input 
                     type="text"

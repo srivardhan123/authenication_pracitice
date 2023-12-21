@@ -68,4 +68,23 @@ router.post("/delete", async (req,res) => {
 
 });
 
+//update the row...API!
+router.post("/update",async(req,res) => {
+    try
+    {
+        if(!req.body){
+            return res
+                .status(400)
+                .send({ message : "Data to update can not be empty"})
+        }
+        const {_id} = req.body;
+        await customer.findByIdAndUpdate({_id},req.body,{useFindAndModify:false});
+        return res.status(200).json({message:"Updated the Data Successfully..."});
+    }catch(err)
+    {
+        console.error(err);
+        return res.status(500).json({errormessage:"Getting Error, while updating the row..."});
+    }
+});
+
 module.exports = router;

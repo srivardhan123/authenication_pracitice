@@ -5,11 +5,14 @@ import Logo from "../assets/logo.svg";
 import {useNavigate} from "react-router-dom";
 import Navbar from '../layouts/Navbar';
 import AuthContext from '../../context/AuthContext';
+import CustomerUpdate from './CustomerUpdate';
 
 export default function Customers() {
     const [data,setdata] = useState([]);
     const {loggedIn,getloggedIn} = useContext(AuthContext);
     const navigate = useNavigate();
+    const [checkEdit,setEdit] = useState(true);
+    const [tempData,settempData] = useState([]);
 
     async function fetchInfo()
     {
@@ -33,18 +36,30 @@ export default function Customers() {
           
         }
     }
+
+    const handleEdit = (val,e) =>
+    {
+      setEdit(false);
+      settempData(val);
+    }
+
     useEffect(() => {
         getloggedIn();
         if(loggedIn===false)
         {
             navigate("/");
         }
-        fetchInfo();
     },[loggedIn]);
+
+    useEffect(() => {
+        fetchInfo();
+    },[data]);
 
     return (
       <>
       <Navbar/>
+      {
+        checkEdit===true && (
       <TableContainer>
          <div className="brand">
              <img src={Logo} alt="logo" />
@@ -57,6 +72,7 @@ export default function Customers() {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Age</th>
+                    {/* <th>Id</th> */}
                     <th colspan='3'>Action</th>
                     {/* <th>Action</th> */}
                 </tr>
@@ -67,7 +83,8 @@ export default function Customers() {
                             <td>{val.name}</td>
                             <td>{val.email}</td>
                             <td>{val.age}</td>
-                            <td><button className="edit-button" >edit</button></td>
+                            {/* <td>{val._id}</td> */}
+                            <td><button className="edit-button" onClick={e => handleEdit(val,e)} >edit</button></td>
                             {/* <td><button className="delete-button" onClick={e => handledelete(key,e)} >delete</button></td> */}
                             <td><button className="delete-button" onClick={e => handledelete(val,key,e)} >delete</button></td> 
                         </tr>
@@ -76,6 +93,12 @@ export default function Customers() {
             </table>
         </div>
       </TableContainer>
+        )}
+        {
+          checkEdit===false && <>
+                <CustomerUpdate data1={tempData} SetEdit={setEdit} setTempData={settempData}/>
+          </>
+        }
       </>
     )
 }
