@@ -18,7 +18,6 @@ function AuthContextProvider(props) {
     setloggedIn(loggedInRes.data);
   } 
 
-  //so to render the above func for the first time when func loads is using reactHooks!
   useEffect(() => {
     getloggedIn();
   },[]);

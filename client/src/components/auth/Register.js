@@ -16,8 +16,6 @@ export default function Register() {
 
   async function register(e)
   {
-    //we use below preventDefault function because when we submit the form, it reloads and all the data will loose!
-    //so to store the input info we use it!
      e.preventDefault();
      try{
           const registerData  = {
@@ -27,7 +25,6 @@ export default function Register() {
           }
           await axios.post("http://localhost:5001/auth/",registerData);
           await getloggedIn();
-          console.log(loggedIn);
           navigate("/home");
      }catch(err)
      {
